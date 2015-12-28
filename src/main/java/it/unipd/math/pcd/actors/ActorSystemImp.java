@@ -2,6 +2,7 @@ package it.unipd.math.pcd.actors;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * concrete class of ActorSystem
@@ -13,9 +14,20 @@ import java.util.concurrent.ExecutorService;
 
 public class ActorSystemImp extends AbsActorSystem {
     private ExecutorService e;
+    private Thread killer;
+    private ThreadFactory tf;
 
     public ActorSystemImp() {
+        tf = Executors.defaultThreadFactory();
+        killer = tf.newThread(new Runnable{
+            public void run(){
+                while(true){
+
+                }
+            }
+        });
         e = Executors.newCachedThreadPool();
+
     }
 
     @Override

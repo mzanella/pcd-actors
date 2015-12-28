@@ -93,6 +93,8 @@ public abstract class AbsActorSystem implements ActorSystem {
             ((AbsActorRef) entry.getKey()).stop();
     }
 
+    public void noMessage(){;}
+
     public Actor<?> match(ActorRef<?> actorref) {
         return actors.get(actorref);
     }
