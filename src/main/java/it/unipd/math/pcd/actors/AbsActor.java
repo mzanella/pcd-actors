@@ -37,6 +37,9 @@
  */
 package it.unipd.math.pcd.actors;
 
+import it.unipd.math.pcd.actors.impl.Mail;
+
+import java.util.concurrent.*;
 /**
  * Defines common properties of all actors.
  *
@@ -57,6 +60,35 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
     protected ActorRef<T> sender;
 
     /**
+     * List of the Mail received
+     */
+    private BlockingQueue<Mail<T>> mailbox;
+
+    /**
+     * true if terminated by the actor system
+     */
+    private volatile boolean terminated;
+
+    /**
+     * Task that manage the mailbox
+     */
+    private MailboxManager manager;
+
+    /**
+     * true if the MailManager is created
+     */
+    private volatile boolean createManager;
+
+    public AbsActor(){
+        mailbox = new LinkedBlockingQueue<>();
+        self = null;
+        sender = null;
+        manager = null;
+        terminated = false;
+        createManager = false;
+    }
+
+    /**
      * Sets the self-referece.
      *
      * @param self The reference to itself
@@ -69,5 +101,38 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
 
     protected final void setSender(ActorRef<T> sender) {
         this.sender = sender;
+    }
+
+    public void addInTheMailbox(Mail<T> m){
+        try {
+            mailbox.put(m);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (!createManager) {
+            synchronized (this) {
+                manager = new MailboxManager();
+                ((AbsActorRef)self).getSystemThreadFactory().newThread(manager).start();
+                createManager = true;
+            }
+        }
+    }
+
+    public void stop() { terminated = true; }
+
+    private class MailboxManager implements Runnable {
+        @Override
+        public void run() {
+            while(!terminated) {
+                try {
+                    Mail m = mailbox.take();
+                    setSender(m.getSender());
+                    receive((T) m.getMessage());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 }

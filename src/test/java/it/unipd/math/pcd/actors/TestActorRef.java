@@ -37,59 +37,51 @@
  */
 package it.unipd.math.pcd.actors;
 
-import it.unipd.math.pcd.actors.exceptions.NoSuchActorException;
-
-import java.util.HashMap;
-import java.util.Map;
+import it.unipd.math.pcd.actors.*;
 
 /**
- * A map-based implementation of the actor system.
+ * Decorates an {@link ActorRef} adding the ability to get the underlying actor associated to the reference.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public abstract class AbsActorSystem implements ActorSystem {
+public class TestActorRef<T extends Message> implements ActorRef<T> {
+
+    private ActorRef<T> reference;
+
+    public TestActorRef(ActorRef<T> actorRef) {
+        this.reference = actorRef;
+    }
 
     /**
-     * Associates every Actor created with an identifier.
+     * Returns the {@link Actor} associated to the internal reference.
+     * @param system Actor system from which retrieving the actor
+     *
+     * @return An actor
      */
-    private Map<ActorRef<?>, Actor<?>> actors = new HashMap<>();/*occhio che l'ho messa io*/
-
-    @Override
-    public ActorRef<? extends Message> actorOf(Class<? extends Actor> actor, ActorMode mode) {
-
-        // ActorRef instance
-        ActorRef<?> reference;
-        try {
-            // Create the reference to the actor
-            reference = this.createActorReference(mode);
-            // Create the new instance of the actor
-            Actor actorInstance = ((AbsActor) actor.newInstance()).setSelf(reference);
-            // Associate the reference to the actor
-            actors.put(reference, actorInstance);
-
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new NoSuchActorException(e);
-        }
-        return reference;
+    public Actor<T> getUnderlyingActor(ActorSystem system) {
+        // TODO To implement
+        return null;
     }
 
     @Override
-    public ActorRef<? extends Message> actorOf(Class<? extends Actor> actor) {
-        return this.actorOf(actor, ActorMode.LOCAL);
+    public void send(T message, ActorRef to) {
+        reference.send(message, to);
     }
 
-    protected abstract ActorRef createActorReference(ActorMode mode);
-
     @Override
-    public void stop(ActorRef<?> actor) { ((AbsActor)actors.get(actor)).stop(); }
-
-    @Override
-    public void stop() {
-        for (Map.Entry<ActorRef<?>, Actor<?>> entry : actors.entrySet())
-            ((AbsActor) entry.getValue()).stop();
+    public int compareTo(ActorRef o) {
+        return reference.compareTo(o);
     }
 
-    public Actor<?> match(ActorRef<?> actorref) { return actors.get(actorref); }
+    @Override
+    public boolean equals(Object obj) {
+        return reference.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return reference.hashCode();
+    }
 }

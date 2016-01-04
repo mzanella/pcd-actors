@@ -1,57 +1,28 @@
 package it.unipd.math.pcd.actors;
 
-import java.util.concurrent.*;
+import it.unipd.math.pcd.actors.impl.ActorSystemImpl;
+import it.unipd.math.pcd.actors.impl.IMail;
+import it.unipd.math.pcd.actors.impl.Mail;
+
+import java.util.concurrent.ThreadFactory;
 
 /**
- * abstract class that implements ActorRef
- * it should factorize behaviors of both LocalActorRef and RemoteActorRef
- *
  * @author Marco Zanella
- * @date 21/12/15
+ * @date 04/01/16
  */
+public abstract class AbsActorRef<T extends Message> implements ActorRef<T>{
+    protected AbsActorSystem system;
 
-public abstract class AbsActorRef<T extends Message> implements ActorRef<T> {
-    private volatile boolean terminated;
-    private BlockingQueue<Mail<T>> mailbox;
-
-    public AbsActorRef() {
-        terminated = false;
-        mailbox = new LinkedBlockingDeque<>();
-    }
+    public AbsActorRef(ActorSystem system){ this.system = (AbsActorSystem)system; }
 
     @Override
     public void send(T message, ActorRef to) {
-        if (!((AbsActorRef)to).terminated)
-            ((AbsActorRef)to).addInTheMailbox(new IMail<>(message, this));
+        ((AbsActorRef)to).putInTheMailbox(new IMail<T>(message, this));
     }
 
-    private void addInTheMailbox(Mail<T> mail) {
-        try {
-            mailbox.put(mail);
-        } catch (InterruptedException e) {
-                e.printStackTrace();
-        }
+    private void putInTheMailbox(Mail<T> m){
+        ((AbsActor<T>)system.match(this)).addInTheMailbox(m);
     }
 
-    public final synchronized void stop() {
-        terminated = true;
-    }
-
-    public final boolean noMessage() {
-        return mailbox.isEmpty();
-    }
-
-    public final boolean isTerminated() {
-        return terminated;
-    }
-
-    protected final Mail pop() {
-        Mail m = null;
-        try {
-            m = mailbox.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return m;
-    }
+    public ThreadFactory getSystemThreadFactory() { return ((ActorSystemImpl)system).getSystemThreadFactory(); }
 }
