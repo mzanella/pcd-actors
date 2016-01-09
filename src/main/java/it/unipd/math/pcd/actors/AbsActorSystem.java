@@ -91,5 +91,10 @@ public abstract class AbsActorSystem implements ActorSystem {
             ((AbsActor) entry.getValue()).stop();
     }
 
-    public Actor<?> match(ActorRef<?> actorref) { return actors.get(actorref); }
+    public Actor<?> match(ActorRef<?> actorref) throws NoSuchActorException {
+        Actor a = actors.get(actorref);
+        if (a == null)
+            throw new NoSuchActorException();
+        return a;
+    }
 }

@@ -64,7 +64,10 @@ public class TestActorRef<T extends Message> implements ActorRef<T> {
      */
     public Actor<T> getUnderlyingActor(ActorSystem system) {
         // TODO To implement
-        return null;
+        //aggiunto da te
+        return (Actor<T>) ((AbsActorSystem)system).match(this);
+        //occhio
+        //return null;
     }
 
     @Override

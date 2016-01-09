@@ -54,6 +54,8 @@ public class PingPongActor extends AbsActor<PingPongMessage> {
     private PingPongMessage lastMessage;
 
     public PingPongMessage getLastMessage() {
+        if (lastMessage == null)
+            throw new RuntimeException("message not found");
         return lastMessage;
     }
 
@@ -65,7 +67,7 @@ public class PingPongActor extends AbsActor<PingPongMessage> {
     @Override
     public void receive(PingPongMessage message) {
         this.lastMessage = message;
-        if (message instanceof PingMessage)
-            self.send(new PongMessage(), sender);
+        if (message instanceof PingMessage){System.out.println("received \n");
+            self.send(new PongMessage(), sender);}
     }
 }
