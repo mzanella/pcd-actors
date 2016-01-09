@@ -1,32 +1,14 @@
 package it.unipd.math.pcd.actors;
 
-import it.unipd.math.pcd.actors.impl.ActorSystemImpl;
-import it.unipd.math.pcd.actors.impl.LocalActorRef;
-import it.unipd.math.pcd.actors.utils.ActorSystemFactory;
-import it.unipd.math.pcd.actors.utils.actors.StoreActor;
-import it.unipd.math.pcd.actors.utils.actors.ping.pong.PingPongActor;
-import it.unipd.math.pcd.actors.utils.messages.StoreMessage;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PingMessage;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-
 /**
  * @author Marco Zanella
  * @date 04/01/16
  */
-public class Prova {
-    private ActorSystem system;
+public class ProvaTest {
+    /*private ActorSystem system;
     private ActorRef<Message> ar1;
     private ActorRef<Message> ar0;
 
-    /**
-     * Initializes the {@code system} with a concrete implementation before each test.
-     */
     @Before
     public void init() {
         this.system = new ActorSystemImplP();
@@ -50,7 +32,7 @@ public class Prova {
         Thread.sleep(1000);
         // Verify that the message is been processed
         Assert.assertEquals("The message has to be received by the actor", "Hello World", actor.getData());*/
-    }
+    /*}
 
 
 }
@@ -127,6 +109,6 @@ class ActorImp extends AbsActor<Message> {
         else if (m instanceof Name){
             lastS = ((Name) m).name;
         }
-    }
+    }*/
 }
 

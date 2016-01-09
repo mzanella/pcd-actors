@@ -15,10 +15,10 @@ import java.util.concurrent.ThreadFactory;
  * @date 24/12/15
  */
 
-public class ActorSystemImpl extends AbsActorSystem {
+public class ActorSystemImp extends AbsActorSystem {
     private ExecutorService e;
 
-    public ActorSystemImpl() { e = Executors.newCachedThreadPool(); }
+    public ActorSystemImp() { e = Executors.newCachedThreadPool(); }
 
     @Override
     protected ActorRef createActorReference(ActorMode mode)

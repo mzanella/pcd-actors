@@ -1,10 +1,10 @@
 package it.unipd.math.pcd.actors;
 
-import it.unipd.math.pcd.actors.impl.ActorSystemImpl;
+import it.unipd.math.pcd.actors.impl.ActorSystemImp;
 
 public class Prova {
     public static void main(String[] args) {
-        ActorSystem s = new ActorSystemImpl();
+        ActorSystem s = new ActorSystemImp();
         ActorRef<Message> ar1 = (ActorRef<Message>)s.actorOf(ActorImp.class);
         ActorRef<Message> ar2 = (ActorRef<Message>)s.actorOf(ActorImp.class);
         int randomNum = (int)(Math.random()*50);

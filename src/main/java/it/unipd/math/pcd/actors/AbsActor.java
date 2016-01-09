@@ -37,6 +37,7 @@
  */
 package it.unipd.math.pcd.actors;
 
+import it.unipd.math.pcd.actors.impl.LocalActorRef;
 import it.unipd.math.pcd.actors.impl.Mail;
 
 import java.util.concurrent.*;
@@ -112,7 +113,7 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
         if (!createManager) {
             synchronized (this) {
                 manager = new MailboxManager();
-                ((AbsActorRef)self).getSystemThreadFactory().newThread(manager).start();
+                ((LocalActorRef<T>)self).getSystemThreadFactory().newThread(manager).start();
                 createManager = true;
             }
         }

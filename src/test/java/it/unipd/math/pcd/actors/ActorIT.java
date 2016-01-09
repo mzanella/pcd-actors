@@ -37,6 +37,7 @@
  */
 package it.unipd.math.pcd.actors;
 
+import it.unipd.math.pcd.actors.impl.LocalActorRef;
 import it.unipd.math.pcd.actors.utils.ActorSystemFactory;
 import it.unipd.math.pcd.actors.utils.actors.ping.pong.PingPongActor;
 import it.unipd.math.pcd.actors.utils.actors.StoreActor;
