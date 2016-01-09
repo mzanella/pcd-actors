@@ -3,31 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6f71727c-7995-4c1f-9977-7c06217487f5" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/AbsActor$MailBoxManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/AbsActor.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/AbsActorRef.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/ActorSystemImp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/Convenevoli.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/DimmiIlTuoNome.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/IMail.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/LocalActorRef.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/Mail.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/VoglioMettertiUnNome.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/impl/ActorSystemImpl.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/ActorImp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/ActorSystemImplP.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/M.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/N.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/Name.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/Prova.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/TestRef.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/AbsActorSystem.class" afterPath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/AbsActorSystem.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/impl/LocalActorRef.class" afterPath="$PROJECT_DIR$/target/classes/it/unipd/math/pcd/actors/impl/LocalActorRef.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/TestActorRef.class" afterPath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/TestActorRef.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/utils/actors/ping/pong/PingPongActor.class" afterPath="$PROJECT_DIR$/target/test-classes/it/unipd/math/pcd/actors/utils/actors/ping/pong/PingPongActor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/unipd/math/pcd/actors/AbsActorSystem.java" afterPath="$PROJECT_DIR$/src/main/java/it/unipd/math/pcd/actors/AbsActorSystem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/it/unipd/math/pcd/actors/impl/LocalActorRef.java" afterPath="$PROJECT_DIR$/src/main/java/it/unipd/math/pcd/actors/impl/LocalActorRef.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/it/unipd/math/pcd/actors/TestActorRef.java" afterPath="$PROJECT_DIR$/src/test/java/it/unipd/math/pcd/actors/TestActorRef.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/it/unipd/math/pcd/actors/utils/actors/ping/pong/PingPongActor.java" afterPath="$PROJECT_DIR$/src/test/java/it/unipd/math/pcd/actors/utils/actors/ping/pong/PingPongActor.java" />
     </list>
     <ignored path="pcd-actors.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -185,7 +160,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1599" />
-    <option name="y" value="-904" />
+    <option name="y" value="-4" />
     <option name="width" value="1368" />
     <option name="height" value="773" />
   </component>
@@ -830,7 +805,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1599" y="-904" width="1368" height="773" extended-state="6" />
+    <frame x="1599" y="-4" width="1368" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
