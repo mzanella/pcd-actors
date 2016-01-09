@@ -38,18 +38,12 @@
 package it.unipd.math.pcd.actors;
 
 import it.unipd.math.pcd.actors.utils.ActorSystemFactory;
-<<<<<<< HEAD
 import it.unipd.math.pcd.actors.utils.actors.TrivialActor;
 import it.unipd.math.pcd.actors.utils.actors.counter.CounterActor;
 import it.unipd.math.pcd.actors.utils.actors.ping.pong.PingPongActor;
 import it.unipd.math.pcd.actors.utils.actors.StoreActor;
 import it.unipd.math.pcd.actors.utils.messages.StoreMessage;
 import it.unipd.math.pcd.actors.utils.messages.counter.Increment;
-=======
-import it.unipd.math.pcd.actors.utils.actors.ping.pong.PingPongActor;
-import it.unipd.math.pcd.actors.utils.actors.StoreActor;
-import it.unipd.math.pcd.actors.utils.messages.StoreMessage;
->>>>>>> correzione mailbox
 import it.unipd.math.pcd.actors.utils.messages.ping.pong.PingMessage;
 import org.junit.Assert;
 import org.junit.Before;

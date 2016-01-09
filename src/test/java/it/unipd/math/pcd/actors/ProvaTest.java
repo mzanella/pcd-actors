@@ -1,11 +1,20 @@
 package it.unipd.math.pcd.actors;
+/*
+import it.unipd.math.pcd.actors.impl.LocalActorRef;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * @author Marco Zanella
  * @date 04/01/16
  */
 public class ProvaTest {
-    /*private ActorSystem system;
+  /*  private ActorSystem system;
     private ActorRef<Message> ar1;
     private ActorRef<Message> ar0;
 
@@ -22,7 +31,7 @@ public class ProvaTest {
         Thread.sleep(1000);
         Assert.assertEquals("The message has to be received by the same actor that send the message",
                 ((ActorImp)(((TestRef)ar0).getActor())).getName(), ((ActorImp)(((TestRef)ar0).getActor())).getLastS());
-        /*int randomNum = (int)(Math.random()*100);
+        int randomNum = (int)(Math.random()*100);
         for(int i=0; i<50; i++) {
             ar1.send(new N(), ar1);
             ar0.send(new N(), ar1);
@@ -31,8 +40,8 @@ public class ProvaTest {
         }
         Thread.sleep(1000);
         // Verify that the message is been processed
-        Assert.assertEquals("The message has to be received by the actor", "Hello World", actor.getData());*/
-    /*}
+        //Assert.assertEquals("The message has to be received by the actor", "Hello World", actor.getData());
+    }
 
 
 }

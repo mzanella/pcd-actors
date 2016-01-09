@@ -35,37 +35,15 @@
  * @version 1.0
  * @since 1.0
  */
-package it.unipd.math.pcd.actors.utils.actors.ping.pong;
+package it.unipd.math.pcd.actors.utils.messages.counter;
 
-import it.unipd.math.pcd.actors.AbsActor;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PingMessage;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PingPongMessage;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PongMessage;
+import it.unipd.math.pcd.actors.Message;
 
 /**
- * Please, insert description here.
+ * Base class for messages that are used to implement a distributed counter.
  *
  * @author Riccardo Cardin
  * @version 1.0
  * @since 1.0
  */
-public class PingPongActor extends AbsActor<PingPongMessage> {
-
-    private PingPongMessage lastMessage;
-
-    public PingPongMessage getLastMessage() {
-        return lastMessage;
-    }
-
-    /**
-     * Responds to a {@link PingMessage} with a {@link PongMessage}.
-     *
-     * @param message The type of messages the actor can receive
-     */
-    @Override
-    public void receive(PingPongMessage message) {
-        this.lastMessage = message;
-        if (message instanceof PingMessage)
-            self.send(new PongMessage(), sender);
-    }
-}
+public abstract class CounterMessage implements Message {}

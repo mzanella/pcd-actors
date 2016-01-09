@@ -14,12 +14,7 @@ public class LocalActorRef<T extends Message> implements ActorRef<T> {
     public void send(T message, ActorRef to) {((AbsActor<T>)system.match(to)).addInTheMailbox(new IMail<T>(message, this));}
 
     @Override
-    public int compareTo(ActorRef o) {
-        System.out.println(system.match(this));
-        System.out.println(system.match(o));
-        System.out.println("---------------------------------------------------------");
-        return (this == o)?0:-1;
-    }
+    public int compareTo(ActorRef o) { return (this == o)?0:-1; }
 
     public ThreadFactory getSystemThreadFactory() { return ((ActorSystemImp)system).getSystemThreadFactory(); }
 }

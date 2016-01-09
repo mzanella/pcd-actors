@@ -35,12 +35,10 @@
  * @version 1.0
  * @since 1.0
  */
-package it.unipd.math.pcd.actors.utils.actors.ping.pong;
+package it.unipd.math.pcd.actors.utils.actors.counter;
 
 import it.unipd.math.pcd.actors.AbsActor;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PingMessage;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PingPongMessage;
-import it.unipd.math.pcd.actors.utils.messages.ping.pong.PongMessage;
+import it.unipd.math.pcd.actors.utils.messages.counter.*;
 
 /**
  * Please, insert description here.
@@ -49,23 +47,22 @@ import it.unipd.math.pcd.actors.utils.messages.ping.pong.PongMessage;
  * @version 1.0
  * @since 1.0
  */
-public class PingPongActor extends AbsActor<PingPongMessage> {
+public class CounterActor extends AbsActor<CounterMessage> {
 
-    private PingPongMessage lastMessage;
+    private int counter = 0;
 
-    public PingPongMessage getLastMessage() {
-        return lastMessage;
+    @Override
+    public void receive(CounterMessage message) {
+        if (message instanceof Increment) {
+            counter++;
+        } else if (message instanceof Decrement) {
+            counter--;
+        } else if (message instanceof Get) {
+            self.send(new Result(counter), sender);
+        }
     }
 
-    /**
-     * Responds to a {@link PingMessage} with a {@link PongMessage}.
-     *
-     * @param message The type of messages the actor can receive
-     */
-    @Override
-    public void receive(PingPongMessage message) {
-        this.lastMessage = message;
-        if (message instanceof PingMessage)
-            self.send(new PongMessage(), sender);
+    public int getCounter() {
+        return counter;
     }
 }
