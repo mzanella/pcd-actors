@@ -113,7 +113,7 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
         if (!createManager) {
             synchronized (this) {
                 manager = new MailboxManager();
-                ((LocalActorRef<T>)self).getSystemThreadFactory().newThread(manager).start();
+                ((LocalActorRef<T>)self).execute(manager);
                 createManager = true;
             }
         }

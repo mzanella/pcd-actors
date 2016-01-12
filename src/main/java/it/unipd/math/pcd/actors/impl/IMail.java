@@ -18,11 +18,19 @@ public final class IMail<T extends Message> implements Mail<T> {
         this.sender = sender;
     }
 
+    /**
+     * Return the message in the mail
+     * @return T subtype of Message
+     */
     @Override
     public T getMessage() {
         return message;
     }
 
+    /**
+     * Return the sender of the Message message
+     * @return ActorRef
+     */
     @Override
     public ActorRef<T> getSender() {
         return sender;
