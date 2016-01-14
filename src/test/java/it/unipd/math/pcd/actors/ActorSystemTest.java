@@ -37,14 +37,16 @@
  */
 package it.unipd.math.pcd.actors;
 
+import it.unipd.math.pcd.actors.exceptions.NoSuchActorException;
 import it.unipd.math.pcd.actors.utils.ActorSystemFactory;
 import it.unipd.math.pcd.actors.utils.actors.TrivialActor;
+import it.unipd.math.pcd.actors.utils.messages.TrivialMessage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Please, insert description here.
+ * Tests features of an actors' system.
  *
  * @author Riccardo Cardin
  * @version 1.0
@@ -74,17 +76,35 @@ public class ActorSystemTest {
         Assert.assertNotNull("A reference to a local actor was created and it is not null", ref);
     }
 
-    /*// FIXME
+
+    /**
+     * It is not requested to implement remote mode for actors anymore. So, an attempt to create a remote
+     * actor should rise an {@link IllegalArgumentException}
+     */
     @Test(expected = IllegalArgumentException.class)
     public void shouldCreateAnActorRefOfWithActorModeRemoteTest() {
-        ActorRef ref = system.actorOf(TrivialActor.class, ActorSystem.ActorMode.REMOTE);
-        Assert.assertNotNull("A reference to a remote actor was created and it is not null", ref);
-    }*/
+        system.actorOf(TrivialActor.class, ActorSystem.ActorMode.REMOTE);
+    }
+
 
     @Test
     public void shouldBeAbleToCreateMoreThanOneActor() {
         ActorRef ref1 = system.actorOf(TrivialActor.class);
         ActorRef ref2 = system.actorOf(TrivialActor.class);
         Assert.assertNotEquals("Two references that points to the same actor implementation are not equal", ref1, ref2);
+    }
+
+    @Test(expected = NoSuchActorException.class)
+    public void shouldStopAnActorAndThisCouldNotBeAbleToReceiveNewMessages() {
+        ActorRef ref1 = system.actorOf(TrivialActor.class);
+        system.stop(ref1);
+        ref1.send(new TrivialMessage(), ref1);
+    }
+
+    @Test(expected = NoSuchActorException.class)
+    public void shouldStopAnActorAndThisCouldNotStoppedASecondTime() {
+        ActorRef ref1 = system.actorOf(TrivialActor.class);
+        system.stop(ref1);
+        system.stop(ref1);
     }
 }
