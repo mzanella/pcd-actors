@@ -4,17 +4,14 @@ import it.unipd.math.pcd.actors.*;
 
 import java.util.concurrent.ThreadFactory;
 
-public class LocalActorRef<T extends Message> implements ActorRef<T> {
+public class LocalActorRef<T extends Message> extends AbsActorRef<T> {
 
-    protected AbsActorSystem system;
 
-    public LocalActorRef(ActorSystem system){ this.system = (AbsActorSystem)system; }
+
+    public LocalActorRef(ActorSystem system){ super((AbsActorSystem)system); }
 
     @Override
     public void send(T message, ActorRef to) {((AbsActor<T>)system.match(to)).addInTheMailbox(new IMail<T>(message, this));}
 
-    @Override
-    public int compareTo(ActorRef o) { return (this == o)?0:-1; }
 
-    public ThreadFactory getSystemThreadFactory() { return ((ActorSystemImp)system).getSystemThreadFactory(); }
 }

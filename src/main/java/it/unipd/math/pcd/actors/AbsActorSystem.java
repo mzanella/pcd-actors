@@ -54,7 +54,12 @@ public abstract class AbsActorSystem implements ActorSystem {
     /**
      * Associates every Actor created with an identifier.
      */
-    private Map<ActorRef<?>, Actor<?>> actors = new HashMap<>();/*occhio che l'ho messa io*/
+    private Map<ActorRef<?>, Actor<?>> actors;
+
+    /**
+     * the constructor creates map for the actors. ActorRef are the keys.
+     */
+    public AbsActorSystem(){actors = new HashMap<>();}
 
     @Override
     public ActorRef<? extends Message> actorOf(Class<? extends Actor> actor, ActorMode mode) {
@@ -83,18 +88,37 @@ public abstract class AbsActorSystem implements ActorSystem {
     protected abstract ActorRef createActorReference(ActorMode mode);
 
     @Override
-    public void stop(ActorRef<?> actor) { ((AbsActor)actors.get(actor)).stop(); }
+    public void stop(ActorRef<?> actor) {
+        ((AbsActor)actors.get(actor)).stop();
+        actors.remove(actor);
+    }
 
+    /**
+     * invoke stop() method on all actors in the map
+     */
     @Override
     public void stop() {
         for (Map.Entry<ActorRef<?>, Actor<?>> entry : actors.entrySet())
             ((AbsActor) entry.getValue()).stop();
+        actors.clear();
     }
 
+    /**
+     * return the actor associated to a given ActorRef
+     * @param actorref type ActorRef
+     * @return Actor type Actor
+     * @throws NoSuchActorException
+     */
     public Actor<?> match(ActorRef<?> actorref) throws NoSuchActorException {
-        Actor a = actors.get(actorref);
-        if (a == null)
+        Actor actor = actors.get(actorref);
+        if (actor == null)
             throw new NoSuchActorException();
-        return a;
+        return actor;
     }
+
+    /**
+     * method that given a runnable execute them
+     * @param r type Runnable
+     */
+    public abstract void systemExecute(Runnable r);
 }

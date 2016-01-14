@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * concrete class of ActorSystem
- * this class use Executors for execute ActorRef
+ * this class use Executors for execute runnable. This is used to execute the MailboxManager of all Actor
  *
  * @author Marco Zanella
  * @date 24/12/15
@@ -18,8 +18,16 @@ import java.util.concurrent.ThreadFactory;
 public class ActorSystemImp extends AbsActorSystem {
     private ExecutorService e;
 
+    /**
+     * the constructor creates inizialize e to a new cached thread pool in order to execute all MailboxManager
+     */
     public ActorSystemImp() { e = Executors.newCachedThreadPool(); }
 
+    /**
+     * method to create new ActorRef
+     * @param mode
+     * @return ActorRef
+     */
     @Override
     protected ActorRef createActorReference(ActorMode mode)
     {
@@ -27,5 +35,9 @@ public class ActorSystemImp extends AbsActorSystem {
         else return null;
     }
 
-    public ThreadFactory getSystemThreadFactory() { return Executors.defaultThreadFactory(); }
+    /**
+     * execute the Runnable passed on a thread on the cached Thread Pool
+     * @param r type Runnable
+     */
+    public void systemExecute(Runnable r){e.execute(r);}
 }
