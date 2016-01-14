@@ -37,6 +37,8 @@
  */
 package it.unipd.math.pcd.actors;
 
+import it.unipd.math.pcd.actors.exceptions.NoSuchActorException;
+import it.unipd.math.pcd.actors.impl.AbsActorRef;
 import it.unipd.math.pcd.actors.impl.LocalActorRef;
 import it.unipd.math.pcd.actors.impl.Mail;
 
@@ -71,20 +73,17 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
     private volatile boolean terminated;
 
     /**
-     * Task that manage the mailbox
-     */
-    private MailboxManager manager;
-
-    /**
      * true if the MailManager is created
      */
     private volatile boolean createManager;
 
-    public AbsActor(){
+    /**
+     * create AbsActor, in particular create the mailbox and set to false the attributes terminated and createManager
+     */
+    AbsActor(){
         mailbox = new LinkedBlockingQueue<>();
         self = null;
         sender = null;
-        manager = null;
         terminated = false;
         createManager = false;
     }
@@ -100,40 +99,73 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
         return this;
     }
 
+    /**
+     * @param sender
+     * set sender to the last actoref that send message to this actor
+     */
     protected final void setSender(ActorRef<T> sender) {
         this.sender = sender;
     }
 
-    public void addInTheMailbox(Mail<T> m){
+    /**
+     * @param mail
+     * @throws NoSuchActorException if try to add in the mailbox a mail and the actor is terminated
+     */
+    public void addInTheMailbox(Mail<T> mail){
         try {
-            mailbox.put(m);
+            if (terminated)
+                throw new NoSuchActorException();
+            mailbox.put(mail);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if (!createManager) {
-            synchronized (this) {
-                manager = new MailboxManager();
-                ((LocalActorRef<T>)self).execute(manager);
-                createManager = true;
-            }
+            createTheMailboxManager();
         }
+    }
+
+
+    /**
+     * create the mailboxManager
+     */
+    private synchronized void createTheMailboxManager() {
+            ((AbsActorRef<T>)self).execute(new MailboxManager());
+            createManager = true;
     }
 
     public void stop() { terminated = true; }
 
+
+    /**
+     * class that implements runnable in order to manage the message in the mailbox
+     */
     private class MailboxManager implements Runnable {
+
+        /**
+         * if the actor isn't terminated then the mailbox manager work.
+         * if the actor is terminated the mailbox manager must empty the mailbox
+         */
         @Override
         public void run() {
-            while(!terminated) {
-                try {
-                    Mail m = mailbox.take();
-                    setSender(m.getSender());
-                    receive((T) m.getMessage());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            while(!terminated)
+               mailManagement();
+            if (terminated)
+                while(!(mailbox.isEmpty()))
+                    mailManagement();
+        }
 
+        /**
+         * this method take a mail from the mailbox, set sender in the actor and invoke on
+         * the actor receive of the message correlate with the sender set
+         */
+        private void mailManagement(){
+            try {
+                Mail m = mailbox.take();
+                setSender(m.getSender());
+                receive((T) m.getMessage());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

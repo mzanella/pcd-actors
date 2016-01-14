@@ -13,6 +13,5 @@ public class LocalActorRef<T extends Message> extends AbsActorRef<T> {
     @Override
     public void send(T message, ActorRef to) {((AbsActor<T>)system.match(to)).addInTheMailbox(new IMail<T>(message, this));}
 
-    @Override
-    public void execute(Runnable r){system.systemExecute(r);}
+
 }

@@ -10,5 +10,5 @@ public abstract class AbsActorRef<T extends Message> implements ActorRef<T> {
     @Override
     public int compareTo(ActorRef o) { return (this == o)?0:-1; }
 
-    protected abstract void execute(Runnable r);
+    public void execute(Runnable r){system.systemExecute(r);}
 }

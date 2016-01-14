@@ -88,7 +88,10 @@ public abstract class AbsActorSystem implements ActorSystem {
     protected abstract ActorRef createActorReference(ActorMode mode);
 
     @Override
-    public void stop(ActorRef<?> actor) { ((AbsActor)actors.get(actor)).stop(); }
+    public void stop(ActorRef<?> actor) {
+        ((AbsActor)actors.get(actor)).stop();
+        actors.remove(actor);
+    }
 
     /**
      * invoke stop() method on all actors in the map
@@ -97,6 +100,7 @@ public abstract class AbsActorSystem implements ActorSystem {
     public void stop() {
         for (Map.Entry<ActorRef<?>, Actor<?>> entry : actors.entrySet())
             ((AbsActor) entry.getValue()).stop();
+        actors.clear();
     }
 
     /**
