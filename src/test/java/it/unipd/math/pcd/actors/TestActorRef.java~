@@ -38,6 +38,10 @@
 package it.unipd.math.pcd.actors;
 
 import it.unipd.math.pcd.actors.*;
+<<<<<<< HEAD
+import it.unipd.math.pcd.actors.impl.LocalActorRef;
+=======
+>>>>>>> upstream/master
 
 /**
  * Decorates an {@link ActorRef} adding the ability to get the underlying actor associated to the reference.

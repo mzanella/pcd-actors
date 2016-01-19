@@ -41,6 +41,8 @@ import it.unipd.math.pcd.actors.exceptions.NoSuchActorException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  * A map-based implementation of the actor system.
@@ -54,7 +56,7 @@ public abstract class AbsActorSystem implements ActorSystem {
     /**
      * Associates every Actor created with an identifier.
      */
-    private Map<ActorRef<?>, Actor<?>> actors;
+    protected Map<ActorRef<?>, Actor<?>> actors;
 
     /**
      * the constructor creates map for the actors. ActorRef are the keys.
@@ -86,22 +88,6 @@ public abstract class AbsActorSystem implements ActorSystem {
     }
 
     protected abstract ActorRef createActorReference(ActorMode mode);
-
-    @Override
-    public void stop(ActorRef<?> actor) {
-        ((AbsActor)actors.get(actor)).stop();
-        actors.remove(actor);
-    }
-
-    /**
-     * invoke stop() method on all actors in the map
-     */
-    @Override
-    public void stop() {
-        for (Map.Entry<ActorRef<?>, Actor<?>> entry : actors.entrySet())
-            ((AbsActor) entry.getValue()).stop();
-        actors.clear();
-    }
 
     /**
      * return the actor associated to a given ActorRef

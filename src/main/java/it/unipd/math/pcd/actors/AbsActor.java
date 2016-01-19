@@ -80,7 +80,7 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
     /**
      * create AbsActor, in particular create the mailbox and set to false the attributes terminated and createManager
      */
-    AbsActor(){
+    public AbsActor(){
         mailbox = new LinkedBlockingQueue<>();
         self = null;
         sender = null;
@@ -108,6 +108,7 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
     }
 
     /**
+     * push a mail to the end of the mailbox
      * @param mail
      * @throws NoSuchActorException if try to add in the mailbox a mail and the actor is terminated
      */
@@ -127,14 +128,53 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
 
     /**
      * create the mailboxManager
+     * synchronized because only one mailbox manager must be created
      */
     private synchronized void createTheMailboxManager() {
             ((AbsActorRef<T>)self).execute(new MailboxManager());
             createManager = true;
     }
 
-    public void stop() { terminated = true; }
+    /**
+     * this method set terminated to true to stop the mailbox manager then it call emptyTheMailbox()
+     * @return true when the actor is stopped
+     * @throws NoSuchActorException if the actor is stopped
+     */
+    public boolean stop() {
+        synchronized (this){
+            if (!terminated)
+                terminated = true;
+            else
+                throw new NoSuchActorException();
+        }
 
+        if (terminated)
+            emptyTheMailbox();
+        return true;
+
+    }
+
+    /**
+     * this method empty the mailbox of an actor w
+     */
+    public void emptyTheMailbox(){
+        while(!(mailbox.isEmpty()))
+            mailManagement();
+    }
+
+    /**
+     * this method take a mail from the mailbox, set sender in the actor and invoke on
+     * the actor receive of the message correlate with the sender set
+     */
+    private void mailManagement(){
+        try {
+            Mail m = mailbox.take();
+            setSender(m.getSender());
+            receive((T) m.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * class that implements runnable in order to manage the message in the mailbox
@@ -143,29 +183,15 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
 
         /**
          * if the actor isn't terminated then the mailbox manager work.
-         * if the actor is terminated the mailbox manager must empty the mailbox
+         * if the actor is terminated the mailbox manager must stop.
          */
         @Override
         public void run() {
             while(!terminated)
                mailManagement();
-            if (terminated)
-                while(!(mailbox.isEmpty()))
-                    mailManagement();
         }
 
-        /**
-         * this method take a mail from the mailbox, set sender in the actor and invoke on
-         * the actor receive of the message correlate with the sender set
-         */
-        private void mailManagement(){
-            try {
-                Mail m = mailbox.take();
-                setSender(m.getSender());
-                receive((T) m.getMessage());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+
+
     }
 }
