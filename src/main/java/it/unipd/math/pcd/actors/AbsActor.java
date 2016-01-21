@@ -78,7 +78,8 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
     private volatile boolean createManager;
 
     /**
-     * create AbsActor, in particular create the mailbox and set to false the attributes terminated and createManager
+     * create AbsActor, in particular create the mailbox and set to false the
+     * attributes terminated and createManager
      */
     public AbsActor(){
         mailbox = new LinkedBlockingQueue<>();
@@ -155,11 +156,15 @@ public abstract class AbsActor<T extends Message> implements Actor<T> {
     }
 
     /**
-     * this method empty the mailbox of an actor w
+     * this method empty the mailbox of an actor
      */
     public void emptyTheMailbox(){
         while(!(mailbox.isEmpty()))
             mailManagement();
+    }
+
+    public boolean isEmptyMailbox(){
+        return mailbox.isEmpty();
     }
 
     /**

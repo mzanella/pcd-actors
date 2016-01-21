@@ -6,9 +6,7 @@ import java.util.concurrent.ThreadFactory;
 
 public class LocalActorRef<T extends Message> extends AbsActorRef<T> {
 
-
-
-    public LocalActorRef(ActorSystem system){ super((AbsActorSystem)system); }
+    public LocalActorRef(ActorSystem system){ super(system); }
 
     /**
      * the message that must be send are added int the mailbox of the receiver. to keep a reference of
@@ -18,6 +16,5 @@ public class LocalActorRef<T extends Message> extends AbsActorRef<T> {
      */
     @Override
     public void send(T message, ActorRef to) {((AbsActor<T>)system.match(to)).addInTheMailbox(new IMail<T>(message, this));}
-
 
 }

@@ -63,8 +63,9 @@ public class ActorSystemImp extends AbsActorSystem {
     }
 
     /**
-     * for each actor in the actor system map create a future task in order to empty the mailbox.
-     * Finally it clear the actor system map
+     * for each actor in the actor system map create a future task in order to create a
+     * Stopper(class derived from Callable) that have to empty the mailbox.
+     * Finally it clear the ActorSystem actor map
      */
     @Override
     public void stop() {
@@ -86,10 +87,10 @@ public class ActorSystemImp extends AbsActorSystem {
     }
 
     /**
-     * class that implements callable in order to stop actors. This must avoid errors derived by some actors that
-     * are working but they are erased from the map
+     * class that implements callable in order to stop actors. This must avoid errors derived
+     * by some actors that are working but they are erased from the map
      */
-    private class Stopper implements Callable<Boolean>{
+    private static class Stopper implements Callable<Boolean>{
         private AbsActor<?> actor;
 
         Stopper(AbsActor<?> a){
